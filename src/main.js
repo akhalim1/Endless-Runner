@@ -26,7 +26,6 @@ let config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 250 },
       debug: true,
     },
   },
@@ -40,11 +39,13 @@ let config = {
 function preload() {
   this.load.image("ocean", "assets/ocean.png");
   this.load.image("submarine", "assets/submarine.png");
+  this.load.image("shark", "assets/shark.png");
 }
 
 const VELOCITY = 200;
 let floatVelocity = 250;
 let submarine = null;
+let shark = null;
 const initialSubPos = { x: config.width * 0.05, y: config.height / 2 };
 
 function create() {
@@ -55,7 +56,20 @@ function create() {
     .setOrigin(0)
     .setScale(0.1);
 
+  submarine.body.gravity.y = 400;
+
   //submarine.body.velocity.x = VELOCITY;
+
+  //shark = this.physics.add.sprite(300, 100, "shark").setOrigin(0, 0);
+  this.sharks = this.physics.add.group({
+    key: "shark",
+    repeat: 2,
+    setXY: { x: 900, y: 100, stepX: -300, stepY: 20 },
+  });
+
+  this.sharks.children.iterate((shark) => {
+    shark.setVelocityX(-VELOCITY);
+  });
 
   this.input.on("pointerdown", float);
 
@@ -70,6 +84,14 @@ function update(time, delta) {
   if (submarine.y > config.height || submarine.y < -submarine.height) {
     restartSubPosition();
   }
+
+  //shark movement here
+  this.sharks.children.iterate((shark) => {
+    if (shark.x < -shark.width) {
+      shark.x = config.width + Phaser.Math.Between(100, 300);
+      shark.y = Phaser.Math.Between(0, config.height - shark.height);
+    }
+  });
 }
 
 function restartSubPosition() {
