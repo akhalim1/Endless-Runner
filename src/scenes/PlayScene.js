@@ -23,26 +23,16 @@ class PlayScene extends Phaser.Scene {
     this.createBackground();
     this.createSub();
     this.createSharks();
+    this.createColliders();
     this.handleInputs();
   }
 
   update() {
     this.sky.tilePositionX -= 1;
 
-    if (
-      this.submarine.y > config.height ||
-      this.submarine.y < -this.submarine.height
-    ) {
-      this.restartSubPosition();
-    }
+    this.checkSubStatus();
 
-    //shark movement here
-    this.sharks.children.iterate((shark) => {
-      if (shark.x < -shark.width) {
-        shark.x = config.width + Phaser.Math.Between(100, 300);
-        shark.y = Phaser.Math.Between(0, config.height - shark.height);
-      }
-    });
+    this.moveSharks();
   }
 
   createBackground() {
@@ -77,6 +67,15 @@ class PlayScene extends Phaser.Scene {
     });
   }
 
+  createColliders() {
+    this.physics.add.collider(
+      this.submarine,
+      this.sharks,
+      this.gameOver,
+      null,
+      this
+    );
+  }
   handleInputs() {
     // purpose of passing "this" (3rd argument): you need to provide the value of the context you want to pass into the function float. By passing "this", you will get the correct context and submarine will be defined.
     this.input.on("pointerdown", this.float, this);
@@ -87,7 +86,25 @@ class PlayScene extends Phaser.Scene {
 
     spaceBar.on("down", this.float, this);
   }
-  restartSubPosition() {
+
+  checkSubStatus() {
+    if (
+      this.submarine.y > config.height ||
+      this.submarine.y < -this.submarine.height
+    ) {
+      this.gameOver();
+    }
+  }
+
+  moveSharks() {
+    this.sharks.children.iterate((shark) => {
+      if (shark.x < -shark.width) {
+        shark.x = config.width + Phaser.Math.Between(100, 300);
+        shark.y = Phaser.Math.Between(0, config.height - shark.height);
+      }
+    });
+  }
+  gameOver() {
     this.submarine.x = this.config.startPosition.x;
     this.submarine.y = this.config.startPosition.y;
     this.submarine.body.velocity.y = 0;
