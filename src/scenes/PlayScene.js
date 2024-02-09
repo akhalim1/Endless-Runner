@@ -20,39 +20,10 @@ class PlayScene extends Phaser.Scene {
   }
 
   create() {
-    this.sky = this.add.tileSprite(0, 0, 640, 480, "sky").setOrigin(0, 0);
-    this.add.image(0, 0, "ocean").setOrigin(0, 0);
-
-    this.submarine = this.physics.add
-      .sprite(
-        this.config.startPosition.x,
-        this.config.startPosition.y,
-        "submarine"
-      )
-      .setOrigin(0)
-      .setScale(0.1);
-
-    this.submarine.body.gravity.y = 400;
-
-    //shark = this.physics.add.sprite(300, 100, "shark").setOrigin(0, 0);
-    this.sharks = this.physics.add.group({
-      key: "shark",
-      repeat: 2,
-      setXY: { x: 900, y: 100, stepX: -300, stepY: 20 },
-    });
-
-    this.sharks.children.iterate((shark) => {
-      shark.setVelocityX(-200);
-    });
-
-    // purpose of passing "this" (3rd argument): you need to provide the value of the context you want to pass into the function float. By passing "this", you will get the correct context and submarine will be defined.
-    this.input.on("pointerdown", this.float, this);
-
-    let spaceBar = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.SPACE
-    );
-
-    spaceBar.on("down", this.float, this);
+    this.createBackground();
+    this.createSub();
+    this.createSharks();
+    this.handleInputs();
   }
 
   update() {
@@ -74,6 +45,48 @@ class PlayScene extends Phaser.Scene {
     });
   }
 
+  createBackground() {
+    this.sky = this.add.tileSprite(0, 0, 640, 480, "sky").setOrigin(0, 0);
+    this.add.image(0, 0, "ocean").setOrigin(0, 0);
+  }
+
+  // change these into classes later
+  createSub() {
+    this.submarine = this.physics.add
+      .sprite(
+        this.config.startPosition.x,
+        this.config.startPosition.y,
+        "submarine"
+      )
+      .setOrigin(0)
+      .setScale(0.1);
+
+    this.submarine.body.gravity.y = 400;
+  }
+
+  createSharks() {
+    //shark = this.physics.add.sprite(300, 100, "shark").setOrigin(0, 0);
+    this.sharks = this.physics.add.group({
+      key: "shark",
+      repeat: 2,
+      setXY: { x: 900, y: 100, stepX: -300, stepY: 20 },
+    });
+
+    this.sharks.children.iterate((shark) => {
+      shark.setVelocityX(-200);
+    });
+  }
+
+  handleInputs() {
+    // purpose of passing "this" (3rd argument): you need to provide the value of the context you want to pass into the function float. By passing "this", you will get the correct context and submarine will be defined.
+    this.input.on("pointerdown", this.float, this);
+
+    let spaceBar = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.SPACE
+    );
+
+    spaceBar.on("down", this.float, this);
+  }
   restartSubPosition() {
     this.submarine.x = this.config.startPosition.x;
     this.submarine.y = this.config.startPosition.y;
