@@ -50,8 +50,8 @@ class PlayScene extends Phaser.Scene {
       )
       .setOrigin(0)
       .setScale(0.1);
-
     this.submarine.body.gravity.y = 400;
+    this.submarine.setCollideWorldBounds(true);
   }
 
   createSharks() {
@@ -63,6 +63,7 @@ class PlayScene extends Phaser.Scene {
     });
 
     this.sharks.children.iterate((shark) => {
+      shark.setImmovable(true);
       shark.setVelocityX(-200);
     });
   }
@@ -89,8 +90,8 @@ class PlayScene extends Phaser.Scene {
 
   checkSubStatus() {
     if (
-      this.submarine.y > config.height ||
-      this.submarine.y < -this.submarine.height
+      this.submarine.getBounds().bottom >= config.height ||
+      this.submarine.y <= 0
     ) {
       this.gameOver();
     }
@@ -104,10 +105,18 @@ class PlayScene extends Phaser.Scene {
       }
     });
   }
+
   gameOver() {
-    this.submarine.x = this.config.startPosition.x;
-    this.submarine.y = this.config.startPosition.y;
-    this.submarine.body.velocity.y = 0;
+    this.physics.pause();
+    this.submarine.setTint(132009);
+
+    this.time.addEvent({
+      delay: 500,
+      callback: () => {
+        this.scene.restart();
+      },
+      loop: false,
+    });
   }
 
   float() {
