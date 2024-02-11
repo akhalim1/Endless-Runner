@@ -13,7 +13,7 @@ class BaseScene extends Phaser.Scene {
     this.add.image(0, 0, "ocean").setOrigin(0);
   }
 
-  createMenu(menu) {
+  createMenu(menu, setUpMenuEvents) {
     let lastMenuPositionY = 0;
 
     menu.forEach((menuItem) => {
@@ -21,11 +21,12 @@ class BaseScene extends Phaser.Scene {
         this.screenCenter[0],
         this.screenCenter[1] + lastMenuPositionY,
       ];
-      this.add
+      menuItem.textObj = this.add
         .text(...menuPosition, menuItem.text, this.fontOptions)
         .setOrigin(0.5, 1);
 
       lastMenuPositionY += this.lineHeight;
+      setUpMenuEvents(menuItem);
     });
   }
 }
