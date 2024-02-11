@@ -28,6 +28,13 @@ class PlayScene extends BaseScene {
     this.createPauseButton();
     this.handleInputs();
     this.listenEvents();
+
+    this.backgroundMusic = this.sound.add("bgm", {
+      loop: true,
+      volume: 0.5,
+    });
+
+    this.backgroundMusic.play();
   }
 
   update() {
@@ -41,7 +48,24 @@ class PlayScene extends BaseScene {
   listenEvents() {
     this.events.on("resume", () => {
       this.physics.resume();
+      this.resumeMusic();
     });
+
+    this.events.on("pause", () => {
+      this.pauseMusic();
+    });
+  }
+
+  pauseMusic() {
+    if (this.backgroundMusic && this.backgroundMusic.isPlaying) {
+      this.backgroundMusic.pause();
+    }
+  }
+
+  resumeMusic() {
+    if (this.backgroundMusic && this.backgroundMusic.isPaused) {
+      this.backgroundMusic.resume();
+    }
   }
 
   createBackground() {
@@ -178,6 +202,7 @@ class PlayScene extends BaseScene {
     }
   }
   gameOver() {
+    this.pauseMusic();
     this.physics.pause();
     this.submarine.setTint(132009);
 
