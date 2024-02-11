@@ -22,6 +22,7 @@ class PlayScene extends Phaser.Scene {
     this.load.image("ocean", "assets/ocean.png");
     this.load.image("submarine", "assets/submarine.png");
     this.load.image("shark", "assets/shark.png");
+    this.load.image("pausebutton", "assets/pausebutton.png");
   }
 
   create() {
@@ -30,6 +31,7 @@ class PlayScene extends Phaser.Scene {
     this.createSharks();
     this.createColliders();
     this.createScore();
+    this.createPauseButton();
     this.handleInputs();
   }
 
@@ -105,6 +107,14 @@ class PlayScene extends Phaser.Scene {
       }
     );
   }
+
+  createPauseButton() {
+    this.add
+      .image(this.config.width - 135, this.config.height - 565, "pausebutton")
+      .setScale(0.5)
+      .setOrigin(1);
+  }
+
   handleInputs() {
     // purpose of passing "this" (3rd argument): you need to provide the value of the context you want to pass into the function float. By passing "this", you will get the correct context and submarine will be defined.
     this.input.on("pointerdown", this.float, this);
