@@ -13,6 +13,9 @@ class PlayScene extends Phaser.Scene {
     this.floatVelocity = 250;
     this.score = 0;
     this.scoreText = "";
+
+    this.bestScore = 0;
+    this.bestScoreText = "";
   }
 
   preload() {
@@ -85,10 +88,22 @@ class PlayScene extends Phaser.Scene {
 
   createScore() {
     this.score = 0;
+    const bestScore = localStorage.getItem("bestScore");
+
     this.scoreText = this.add.text(16, 16, `Score: ${0}`, {
       fontSize: "20px",
       fill: "#fff",
     });
+
+    this.bestScoreText = this.add.text(
+      16,
+      40,
+      `Best Score: ${bestScore || 0}`,
+      {
+        fontSize: "15px",
+        fill: "#fff",
+      }
+    );
   }
   handleInputs() {
     // purpose of passing "this" (3rd argument): you need to provide the value of the context you want to pass into the function float. By passing "this", you will get the correct context and submarine will be defined.
@@ -120,6 +135,7 @@ class PlayScene extends Phaser.Scene {
 
       if (!shark.getData("hasDodged") && shark.x < this.submarine.x) {
         this.addScore();
+
         shark.setData("hasDodged", true);
       }
     });
@@ -130,9 +146,23 @@ class PlayScene extends Phaser.Scene {
     this.scoreText.setText(`Score: ${this.score}`);
   }
 
+  setBestScore() {
+    // local storage stuff here
+    const bestScoreText = localStorage.getItem("bestScore");
+    const bestScore = bestScoreText && parseInt(bestScoreText, 10);
+
+    if (!bestScore || this.score > bestScore) {
+      localStorage.setItem("bestScore", this.score);
+    }
+  }
   gameOver() {
     this.physics.pause();
     this.submarine.setTint(132009);
+
+    this.setBestScore();
+
+    const bestScore = localStorage.getItem("bestScore");
+    this.bestScoreText.setText(`Best Score: ${bestScore}`);
 
     this.time.addEvent({
       delay: 500,
