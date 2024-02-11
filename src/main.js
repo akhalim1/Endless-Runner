@@ -33,7 +33,7 @@ const SHARED_CONFIG = {
   startPosition: SUB_POSITION,
 };
 
-const Scenes = [PreloadScene, MenuScene, TutorialScene, PlayScene];
+const Scenes = [PreloadScene, MenuScene, TutorialScene, PlayScene, PauseScene];
 
 const createScene = (Scene) => new Scene(SHARED_CONFIG);
 // iterates over all the scenes, and creating a new instance of that scene with SHARED_CONFIG

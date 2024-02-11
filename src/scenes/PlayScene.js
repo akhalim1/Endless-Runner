@@ -103,15 +103,17 @@ class PlayScene extends BaseScene {
 
   createPauseButton() {
     const pauseButton = this.add
-      .image(this.config.width - 135, this.config.height - 565, "pausebutton")
-      .setInteractive()
+      .image(this.config.width - 10, this.config.height * 0.065, "pausebutton")
+      .setOrigin(1)
       .setScale(0.5)
-      .setOrigin(1);
+      .setInteractive();
 
     pauseButton.on("pointerdown", () => {
       console.log("Paused.");
       this.physics.pause();
       this.scene.pause();
+      // this shouldn't shutdown the play scene
+      this.scene.launch("PauseScene");
     });
   }
 
