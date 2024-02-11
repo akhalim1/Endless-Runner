@@ -1,13 +1,13 @@
-class PlayScene extends Phaser.Scene {
+class PlayScene extends BaseScene {
   constructor(config) {
-    super("PlayScene");
+    super("PlayScene", config);
     /*
     this.initialSubPos = {
       x: 100,
       y: 400,
     };
     */
-    this.config = config;
+
     this.submarine = null;
     this.sharks = null;
     this.floatVelocity = 250;
@@ -19,7 +19,7 @@ class PlayScene extends Phaser.Scene {
   }
 
   create() {
-    this.createBackground();
+    super.create();
     this.createSub();
     this.createSharks();
     this.createColliders();
@@ -29,7 +29,7 @@ class PlayScene extends Phaser.Scene {
   }
 
   update() {
-    this.sky.tilePositionX -= 1;
+    //this.ocean.tilePositionX -= 1;
 
     this.checkSubStatus();
 

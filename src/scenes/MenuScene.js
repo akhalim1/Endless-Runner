@@ -1,15 +1,10 @@
-class MenuScene extends Phaser.Scene {
+class MenuScene extends BaseScene {
   constructor(config) {
-    super("MenuScene");
-    this.config = config;
-  }
-
-  preload() {
-    this.load.image("ocean", "assets/ocean.png");
+    super("MenuScene", config);
   }
 
   create() {
-    this.add.image(0, 0, "ocean").setOrigin(0);
-    //this.scene.start("PlayScene");
+    super.create();
+    this.scene.start("PlayScene");
   }
 }
