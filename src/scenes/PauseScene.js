@@ -4,8 +4,8 @@ class PauseScene extends BaseScene {
 
     this.menu = [
       { scene: "PlayScene", text: "Resume" },
-      { scene: "TutorialScene", text: "Tutorial" },
-      { scene: "MenuScene", text: "Exit" },
+      // { scene: "TutorialScene", text: "Tutorial" },
+      { scene: "MenuScene", text: "Exit to Menu" },
     ];
   }
 
@@ -26,7 +26,17 @@ class PauseScene extends BaseScene {
     });
 
     textObj.on("pointerup", () => {
-      console.log("Clicked.");
+      if (menuItem.scene && menuItem.text === "Resume") {
+        // shuts down pause scene
+        this.scene.stop();
+        // resumes play scene
+        this.scene.resume(menuItem.scene);
+      } else {
+        // Shuts down play scene, pause scene
+        this.scene.stop("PlayScene");
+        // starts menu scene
+        this.scene.start(menuItem.scene);
+      }
     });
   }
 }

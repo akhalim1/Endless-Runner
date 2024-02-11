@@ -26,6 +26,7 @@ class PlayScene extends BaseScene {
     this.createScore();
     this.createPauseButton();
     this.handleInputs();
+    this.listenEvents();
   }
 
   update() {
@@ -36,6 +37,12 @@ class PlayScene extends BaseScene {
     this.moveSharks();
   }
 
+  listenEvents() {
+    this.events.on("resume", () => {
+      this.physics.resume();
+    });
+  }
+  
   createBackground() {
     this.sky = this.add.tileSprite(0, 0, 640, 480, "sky").setOrigin(0, 0);
     this.add.image(0, 0, "ocean").setOrigin(0, 0);
