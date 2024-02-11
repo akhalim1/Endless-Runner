@@ -11,6 +11,8 @@ class PlayScene extends Phaser.Scene {
     this.submarine = null;
     this.sharks = null;
     this.floatVelocity = 250;
+    this.score = 0;
+    this.scoreText = "";
   }
 
   preload() {
@@ -24,6 +26,7 @@ class PlayScene extends Phaser.Scene {
     this.createSub();
     this.createSharks();
     this.createColliders();
+    this.createScore();
     this.handleInputs();
   }
 
@@ -50,7 +53,7 @@ class PlayScene extends Phaser.Scene {
       )
       .setOrigin(0)
       .setScale(0.1);
-    this.submarine.body.gravity.y = 400;
+    this.submarine.body.gravity.y = 500;
     this.submarine.setCollideWorldBounds(true);
   }
 
@@ -65,17 +68,27 @@ class PlayScene extends Phaser.Scene {
     this.sharks.children.iterate((shark) => {
       shark.setImmovable(true);
       shark.setVelocityX(-200);
+
+      shark.setData("hasDodged", false);
     });
   }
 
   createColliders() {
     this.physics.add.collider(
-      this.submarine,
-      this.sharks,
-      this.gameOver,
-      null,
-      this
+      this.submarine, // object1
+      this.sharks, // object2
+      this.gameOver, // callback function that's invoked when collision happens
+      null, // callback function that's also invoked when collsion happens (must return a boolean)
+      this // callback context (the scope in which to call the callbacks)
     );
+  }
+
+  createScore() {
+    this.score = 0;
+    this.scoreText = this.add.text(16, 16, `Score: ${0}`, {
+      fontSize: "20px",
+      fill: "#fff",
+    });
   }
   handleInputs() {
     // purpose of passing "this" (3rd argument): you need to provide the value of the context you want to pass into the function float. By passing "this", you will get the correct context and submarine will be defined.
@@ -102,8 +115,19 @@ class PlayScene extends Phaser.Scene {
       if (shark.x < -shark.width) {
         shark.x = config.width + Phaser.Math.Between(100, 300);
         shark.y = Phaser.Math.Between(0, config.height - shark.height);
+        shark.setData("hasDodged", false);
+      }
+
+      if (!shark.getData("hasDodged") && shark.x < this.submarine.x) {
+        this.addScore();
+        shark.setData("hasDodged", true);
       }
     });
+  }
+
+  addScore() {
+    this.score += 1;
+    this.scoreText.setText(`Score: ${this.score}`);
   }
 
   gameOver() {
