@@ -35,7 +35,11 @@ let config = {
       debug: true,
     },
   },
-  scene: [new MenuScene(SHARED_CONFIG), new PlayScene(SHARED_CONFIG)],
+  scene: [
+    PreloadScene,
+    new MenuScene(SHARED_CONFIG),
+    new PlayScene(SHARED_CONFIG),
+  ],
 };
 
 let game = new Phaser.Game(config);
