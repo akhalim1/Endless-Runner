@@ -1,16 +1,15 @@
 // Project: Endless Runner
 // Name: Alexander Halim
-// Date: 2/1/24
+// Hours Spent: 20h
 
 /* notes here
 
-Include in-game instructions using text or other means (e.g., tooltips, tutorial, diagram, etc.) (1)
+Creative Tilt:
+
 Include one or more animated characters that use a texture atlas* (1)
-Simulate scrolling with a tileSprite (or equivalent means) (1)
 Have looping background music* (1)
 Use a minimum of four sound effects for key mechanics, UI, and/or significant events appropriate to your game design (1)
 Include in-game credits for all roles, assets, music, etc. (1)
-* You must make all of your own visual assets (without AI assistance). It's OK to use royalty-free music/SFX.
 
 IDEA: (GAME NAME) UNDERWATER ODYSSEY
 

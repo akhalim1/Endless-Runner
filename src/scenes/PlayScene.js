@@ -20,6 +20,7 @@ class PlayScene extends BaseScene {
 
   create() {
     super.create();
+    this.createBackground();
     this.createSub();
     this.createSharks();
     this.createColliders();
@@ -30,7 +31,7 @@ class PlayScene extends BaseScene {
   }
 
   update() {
-    //this.ocean.tilePositionX -= 1;
+    this.ocean.tilePositionX -= 1;
 
     this.checkSubStatus();
 
@@ -42,10 +43,12 @@ class PlayScene extends BaseScene {
       this.physics.resume();
     });
   }
-  
+
   createBackground() {
-    this.sky = this.add.tileSprite(0, 0, 640, 480, "sky").setOrigin(0, 0);
-    this.add.image(0, 0, "ocean").setOrigin(0, 0);
+    //this.sky = this.add.tileSprite(0, 0, 640, 480, "sky").setOrigin(0, 0);
+    this.ocean = this.add
+      .tileSprite(0, 0, this.config.width, this.config.height, "ocean")
+      .setOrigin(0, 0);
   }
 
   // change these into classes later
