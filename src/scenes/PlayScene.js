@@ -102,7 +102,7 @@ class PlayScene extends BaseScene {
       )
       .setOrigin(0)
       .setScale(2);
-
+    // hitbox stuff here
     this.submarine.body.setSize(
       this.submarine.width * 0.6,
       this.submarine.height * 0.35

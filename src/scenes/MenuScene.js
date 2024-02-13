@@ -20,14 +20,21 @@ class MenuScene extends BaseScene {
     textObj.setInteractive();
     textObj.on("pointerover", () => {
       textObj.setStyle({ fill: "#A020F0" });
+
+      this.sound.play("mousehover");
     });
 
     textObj.on("pointerout", () => {
       textObj.setStyle({ fill: "#fff" });
     });
 
+    textObj.on("pointerdown", () => {
+      this.sound.play("mouseclick", { rate: 2 });
+    });
+
     textObj.on("pointerup", () => {
       //console.log("Clicked");
+
       menuItem.scene && this.scene.start(menuItem.scene);
 
       if (menuItem === "Exit") {

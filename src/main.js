@@ -7,8 +7,6 @@ Credits:
 (Music) "Constance - The Descent" by Kevin MacLeod
 
 Creative Tilt:
-
-Include one or more animated characters that use a texture atlas* (1)
 Use a minimum of four sound effects for key mechanics, UI, and/or significant events appropriate to your game design (1)
 - Mouse Click SFX
 - Mouse Hover Sound Effect
@@ -19,7 +17,7 @@ IDEA: (GAME NAME) UNDERWATER ODYSSEY
 
 Theme: Submarine avoiding underwater hazards like coral, trenches, scary aquatic creatures (sharks, kraken?).
 
-- Flappy Bird like mechanic. "Flap" to avoid/pass through obstacles.
+- Flappy Bird like mechanic. "Flap" (or float in this case) to avoid/pass through obstacles.
 - Additional Idea: Gather bubbles for oxygen to keep going.
 - Another Idea: Current system? (add if you have time)
 */
