@@ -3,13 +3,17 @@
 // Hours Spent: 20h
 
 /* notes here
+Credits: 
+(Music) "Constance - The Descent" by Kevin MacLeod
 
 Creative Tilt:
 
 Include one or more animated characters that use a texture atlas* (1)
-Have looping background music* (1)
 Use a minimum of four sound effects for key mechanics, UI, and/or significant events appropriate to your game design (1)
-Include in-game credits for all roles, assets, music, etc. (1)
+- Mouse Click SFX
+- Mouse Hover Sound Effect
+- Shark Bite Sound Effect
+- Float Sound Effect (bubbling)
 
 IDEA: (GAME NAME) UNDERWATER ODYSSEY
 
@@ -32,7 +36,14 @@ const SHARED_CONFIG = {
   startPosition: SUB_POSITION,
 };
 
-const Scenes = [PreloadScene, MenuScene, TutorialScene, PlayScene, PauseScene];
+const Scenes = [
+  PreloadScene,
+  MenuScene,
+  CreditsScene,
+  TutorialScene,
+  PlayScene,
+  PauseScene,
+];
 
 const createScene = (Scene) => new Scene(SHARED_CONFIG);
 // iterates over all the scenes, and creating a new instance of that scene with SHARED_CONFIG

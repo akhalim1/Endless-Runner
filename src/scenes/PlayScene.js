@@ -21,6 +21,23 @@ class PlayScene extends BaseScene {
   create() {
     super.create();
     this.createBackground();
+
+    this.anims.create({
+      key: "submarineswim",
+      frames: [
+        { key: "submarine", frame: "submarineswim0" },
+        { key: "submarine", frame: "submarineswim1" },
+        { key: "submarine", frame: "submarineswim3" },
+        { key: "submarine", frame: "submarineswim4" },
+        { key: "submarine", frame: "submarineswim5" },
+        { key: "submarine", frame: "submarineswim6" },
+        { key: "submarine", frame: "submarineswim7" },
+        { key: "submarine", frame: "submarineswim8" },
+      ],
+      frameRate: 10,
+      repeat: -1,
+    });
+
     this.createSub();
     this.createSharks();
     this.createColliders();
@@ -84,9 +101,15 @@ class PlayScene extends BaseScene {
         "submarine"
       )
       .setOrigin(0)
-      .setScale(0.1);
+      .setScale(2);
+
+    this.submarine.body.setSize(
+      this.submarine.width * 0.6,
+      this.submarine.height * 0.35
+    );
     this.submarine.body.gravity.y = 500;
     this.submarine.setCollideWorldBounds(true);
+    this.submarine.play("submarineswim");
   }
 
   createSharks() {
