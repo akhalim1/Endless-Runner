@@ -133,7 +133,10 @@ class PlayScene extends BaseScene {
       this.submarine, // object1
       this.sharks, // object2
       this.gameOver, // callback function that's invoked when collision happens
-      null, // callback function that's also invoked when collsion happens (must return a boolean)
+      () => {
+        this.sound.play("sharkbite");
+        return true;
+      }, // callback function that's also invoked when collsion happens (must return a boolean)
       this // callback context (the scope in which to call the callbacks)
     );
   }
@@ -244,6 +247,7 @@ class PlayScene extends BaseScene {
   }
 
   float() {
+    this.sound.play("bubblepop", { volume: 0.1 });
     this.submarine.body.velocity.y = -this.floatVelocity;
   }
 }
