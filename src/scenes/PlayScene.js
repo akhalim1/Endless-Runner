@@ -143,7 +143,7 @@ class PlayScene extends BaseScene {
 
   createScore() {
     this.score = 0;
-    const bestScore = localStorage.getItem("bestScore");
+    const bestScore = localStorage.getItem("bestScores");
 
     this.scoreText = this.add.text(16, 16, `Score: ${0}`, {
       fontSize: "20px",
@@ -220,11 +220,11 @@ class PlayScene extends BaseScene {
 
   setBestScore() {
     // local storage stuff here
-    const bestScoreText = localStorage.getItem("bestScore");
+    const bestScoreText = localStorage.getItem("bestScores");
     const bestScore = bestScoreText && parseInt(bestScoreText, 10);
 
     if (!bestScore || this.score > bestScore) {
-      localStorage.setItem("bestScore", this.score);
+      localStorage.setItem("bestScores", this.score);
     }
   }
   gameOver() {
@@ -234,7 +234,7 @@ class PlayScene extends BaseScene {
 
     this.setBestScore();
 
-    const bestScore = localStorage.getItem("bestScore");
+    const bestScore = localStorage.getItem("bestScores");
     this.bestScoreText.setText(`Best Score: ${bestScore}`);
 
     this.time.addEvent({
